@@ -1,0 +1,10 @@
+// Reduce:
+// the reduce allows you to do something like this:
+var totalYears = 0;
+for (let i = 0; i < inventors.length; i++) {
+    totalYears += inventors[i].year;
+}
+
+console.log(totalYears);
+
+//but in a clear way
