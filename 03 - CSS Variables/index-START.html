@@ -13,15 +13,32 @@
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
 
     <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px"> <!--the data-sizing is here so it can be added as suffix for the css value, as it's not just the value, it also needs the 'px'-->
 
     <label for="base">Base Color</label>
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img src="https://unsplash.it/800/500?random">
 
   <style>
+
+    :root { /*variables will be defined at root level*/
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -46,6 +63,18 @@
   </style>
 
   <script>
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate() {
+      const suffix = this.dataset.sizing || ""; //using the data-sizing for suffix
+      // dataset = an object with all the data- attributes from "this"
+      //the empty string is for the color input as it doesn't have a sizing attribute, so it's not undef
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix) //documentElement selects the entire doc
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate))
+        inputs.forEach(input => input.addEventListener('mousemove', handleUpdate))
+
   </script>
 
 </body>

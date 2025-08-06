@@ -1,0 +1,6 @@
+You can also scope the CSS variable by adding it to a specific element.
+For instance, to use it only on an h2, you can:
+
+<h2 style="--base: #BADA55">Update CSS Variables with <span class='hl'>JS</span></h2>
+
+This will update the base on this element only, so just the span that's using this to set its colour will be updated to that colour.
