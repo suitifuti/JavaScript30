@@ -1,0 +1,1 @@
+When there's a timeout in CSS, like the transition, it's better to use event listener (listening for when the event/transition ends) to remove the class with the new style. If we have a separate timeout, this can get out of sync.
