@@ -63,12 +63,49 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand'); //grab the seconds hand
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    function setDate() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60) * 360) + 90; //to convert the second to degrees, we base it to zero by dividing by 60 and then multiply by 100% degrees, which is 360
+      //the +90 is to offset the default that was set to 90deg initially
+
+      const min = now.getMinutes();
+      const minDegrees = ((min / 60) * 360) + 90;
+
+      const hour = now.getHours();
+      const hourDegrees = ((hour / 12) * 360) + 90;
+
+
+      
+      if (seconds >= 60) { //this will make the seconds hand to stop "jumping back to 90deg when it hits 12"
+        secondHand.style.transition = "none"
+      }
+      else {
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+      }
+      
+      minHand.style.transform = `rotate(${minDegrees}deg)`;
+      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+      console.log(seconds);
+      console.log(min);
+      console.log(hour);
+    }
+
+    setInterval(setDate, 1000)
 
   </script>
 </body>
