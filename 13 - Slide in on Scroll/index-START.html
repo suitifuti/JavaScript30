@@ -58,6 +58,26 @@
         if (callNow) func.apply(context, args);
       };
     }
+    const sliderImages = document.querySelectorAll('.slide-in');
+    function checkSlide(e) {
+      sliderImages.forEach(sliderImage => {
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2; //(window.scrollY + window.innerHeight) will return the pixels we're currently at in the page /  we also subtract the image height and because we want it to start showing up when it's peeking at around 50%, we divide by 2
+
+        const imageBottom = sliderImage.offsetTop + sliderImage.height; //offsetTop tells us the top of the image is X far from the top of the page. because we wanna know where the bottom is to scroll up, we add the image height 
+        
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        if (isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add('active');
+        }
+        else {
+          sliderImage.classList.remove('active');
+        }
+      })
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide));
 
   </script>
 
