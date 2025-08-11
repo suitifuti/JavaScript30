@@ -183,6 +183,26 @@
     </li>
   </ul>
 <script>
+  const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+  const seconds = timeNodes
+  .map(node => node.dataset.time)   //data set gets a list of data- attributes as obj, in this case, time is the property of the obj
+  .map(timeCode => {
+    const [mins, secs] = timeCode.split(':').map(parseFloat); //doing it like this will call the function for every item of the array
+    return (mins * 60) + secs;
+  })
+  .reduce((total, vidSeconds) => total + vidSeconds);
+
+  let secondsLeft = seconds;
+  const hours = Math.floor(secondsLeft/3600);
+  secondsLeft = secondsLeft % 3600;
+
+  const mins = Math.floor(secondsLeft / 60);
+  secondsLeft = secondsLeft % 60;
+
+  console.log(hours, mins, secondsLeft)
+
+
+
 </script>
 </body>
 </html>
