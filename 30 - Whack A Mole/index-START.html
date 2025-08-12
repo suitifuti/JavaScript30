@@ -37,7 +37,58 @@
   const holes = document.querySelectorAll('.hole');
   const scoreBoard = document.querySelector('.score');
   const moles = document.querySelectorAll('.mole');
+  let lastHole;
+  let timeUp = false;
+  let score = 0;
 
+  function randomTime(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
+
+  function randomHole(holes) {
+    const idx = Math.floor(Math.random() * holes.length);
+    const hole = holes[idx];
+
+    if (hole === lastHole) {
+      console.log('Same hole!!')
+      return randomHole(holes); //for recursion, instead o returning something, it's returning the function itself, which will then run again
+    }
+
+
+    lastHole = hole;
+    return hole; //for recursion we need to return and not only console.log
+    
+  }
+
+  function peep() {
+    const time = randomTime(200, 1000);
+    const hole = randomHole(holes);
+    console.log(time, hole);
+    hole.classList.add('up');
+    setTimeout(() => {
+          hole.classList.remove('up');
+
+          if (!timeUp) peep();
+    }, time);
+  }
+
+  function startGame() {
+    score = 0;
+    scoreBoard.textContent = 0;
+    timeUp = false;
+    peep();
+    setTimeout(() => timeUp = true, 10000)
+  }
+
+  function bonk(e) {
+    if (!e.isTrusted) return; //cheater!!!!
+    score++;
+    this.classList.remove('up');
+    scoreBoard.textContent = score;
+    
+  }
+
+  moles.forEach(mole => mole.addEventListener('click', bonk))
 </script>
 </body>
 </html>
